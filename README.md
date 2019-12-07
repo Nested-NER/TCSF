@@ -1,6 +1,5 @@
 # Joint Learning of Token Context and Span Relation for Nested NER
 
-We provide the implementation of ToI-SCNN-DTE Model on https://github.com/Nested-NER/ToI-SCNN-DTE.
 
 ### Environment
 #### Python packages
