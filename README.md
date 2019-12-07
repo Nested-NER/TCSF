@@ -1,4 +1,4 @@
-# Joint Learning of Token Context and Span Relation for Nested NER
+# TCSR model for nested NER
 
 
 ### Environment
@@ -35,11 +35,9 @@ All configuration are listed in config.py. Please verify parameters before runni
 >- python process_data.py
 >- python train.py 
 
-If you run DTE for contextual network, please set  self.use_bert = False, self.if_DTE = True in config.py.
+If you run TCSR without SRN network, please set  self.if_span_te = False in config.py.
 
-If you run BERT for contextual network, please set  self.use_bert = True, self.if_DTE = False in config.py. 
-
-If you run DTE+BERT for contextual network, please set  self.use_bert = True, self.if_DTE = True in config.py.
+If you run BERT for contextual network, please set  self.use_bert = True in config.py. 
 
 #### Testing
 >- python test.py
