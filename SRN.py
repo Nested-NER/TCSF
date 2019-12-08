@@ -1,8 +1,8 @@
 #!/usr/bin/env python  
 # -*- coding:utf-8 _*-
 """ 
-@file: Transformer.py 
-@time: 2019/04/13
+@file: SRN.py 
+@time: 2019/09/13
 
 @note:
 """
