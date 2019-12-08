@@ -65,7 +65,7 @@ class Config:
         self.if_shuffle = True
         self.if_freeze = False if self.vec_model == "glove" else True
         self.dropout = 0.5
-        self.epoch = 80 if self.data_set == "GENIA"  else 60
+        self.epoch = 60 if self.data_set == "GENIA"  else 80
         self.batch_size = 8 
         self.opt ="Adam" 
         self.lr = 3e-4
