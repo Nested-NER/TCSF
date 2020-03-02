@@ -1,4 +1,4 @@
-# TCSR model for nested NER
+# TCSF model for nested NER
 
 
 ### Environment
