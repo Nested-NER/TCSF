@@ -17,17 +17,6 @@ class Config:
         self.Lb = 10 
         self.train_neg_iou_th = 0.88  if self.data_set == "GENIA"  else 0.84
 
- 
-        # bert
-        self.use_bert = True
-        self.bert_config = 'large' 
-        self.fusion = True
-        self.fusion_sum = True
-        self.use_last_four = False
-        self.input_size_bert = 768 if self.bert_config == 'base' else 1024
-        self.fusion_layer = 13 if self.bert_config == 'base' else 25
-        # self.bert_path = ''
-        self.bert_path = f"/home/iot538/Documents/wangchi/data/bert/uncased/"
 
         # word embeddings
         self.vec_model = "wiki-pubmed" if self.data_set == "GENIA"  else "glove" 
