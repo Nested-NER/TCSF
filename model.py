@@ -124,9 +124,6 @@ class TOI_BERT(nn.Module):
         self.config = config
         self.outfile = None
 
-        self.input_size_bert = config.input_size_bert
-        self.input_size = self.input_size_bert if config.use_bert else 0
-
         if self.config.if_DTE:
             self.dte = DTE(config, self.config.N, self.config.h)
             self.input_size += self.dte.input_size
