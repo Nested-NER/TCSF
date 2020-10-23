@@ -105,45 +105,6 @@ class ModelInRuntime:
         self.entity_nested_depth = self.whetherUseGpu(Variable(torch.LongTensor(self.entity_nested_depth)),
                                                       self.config.if_gpu)
 
-        if self.config.use_bert:
-            # bert initiallization
-            tokens_tensors = []
-            for each in self.word_origin_batch:
-                text = "[CLS] " + " ".join(each) + " [SEP]"
-
-                if text not in self.text_to_bert:
-                    tokens_length = []
-                    text_subwords = self.tokenizer.tokenize(text)
-                    st = 0
-                    for each_word in each:
-                        aim = self.tokenizer.tokenize(each_word)
-                        tokens_length.append([st, st + len(aim)])
-                        st = st + len(aim)
-                    tokens_length = np.array(tokens_length)
-                    sub_tokens = torch.tensor([self.tokenizer.convert_tokens_to_ids(text_subwords)]).cuda()
-                    text_embedding, _ = self.bertModel(sub_tokens)
-                    text_embedding = torch.cat(text_embedding, dim = 0).squeeze(1)
-                    word_embedding = self.bertModel.embeddings.word_embeddings(sub_tokens)
-                    word_embedding = self.bertModel.embeddings.LayerNorm(word_embedding)
-                    text_embedding = torch.cat((text_embedding,word_embedding), dim = 0)[:,1:-1,:]
-                    cumsum = torch.cat([torch.zeros(text_embedding.size(0),1,text_embedding.size(2)).cuda(), torch.cumsum(text_embedding, 1)], dim=1)
-                    boundary_len = Variable(torch.FloatTensor(tokens_length[:,1] - tokens_length[:,0]), requires_grad=False).cuda()
-                    hidden_list = (cumsum[:, tokens_length[:, 1], :] - cumsum[:, tokens_length[:, 0], :]) / boundary_len.view(1, boundary_len.size(0) ,1)
-                    self.text_to_bert_out[self.cnt] = hidden_list.cpu().numpy()
-                    self.text_to_bert[text] = self.cnt
-                    self.cnt += 1
-                else:
-                    hidden_list = torch.tensor(self.text_to_bert_out[self.text_to_bert.get(text)]).cuda()
-                tokens_tensors.append(hidden_list.unsqueeze(0))
-
-            hidden_list = torch.cat(tokens_tensors, dim = 0)
-
-            if not self.config.fusion:
-                hidden_list = hidden_list[:,-2:-1,:,:]
-            else:
-                pass
-            self.hiddenList = hidden_list
-        else: self.hiddenList = None
 
     def whetherUseGpu(self, value, flag):
         return value.cuda() if flag else value
