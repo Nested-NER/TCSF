@@ -29,8 +29,7 @@ class Config:
         self.cnn_block = 7 if self.data_set == "GENIA" else 5
         self.kernel_size = 3  
         self.hit_pooling_size =  3
-        self.nested_depth_fc_size = 1024  if self.use_bert == True else 256
-        self.nested_depth = 3
+
 
         # DTE
         self.if_DTE = True
