@@ -6,7 +6,6 @@
 # TCSR model
 #  class TOI_Pooling defines HIT pooling operation
 #  class TOI_CNN_RES defines stacked CNN
-#  class TOI_BERT defines the contextual network of DTE using BERT 
 """
 
 
@@ -172,13 +171,6 @@ class TOI_BERT(nn.Module):
 
     def forward(self, mask_batch, word_batch, char_batch, char_len_batch, pos_batch, toi_batch, bert_hidden, entity_idx):
         softmax_wight = None
-        if self.config.use_bert:
-            if not self.config.fusion_sum:
-                bert_hidden_out = torch.zeros(bert_hidden.size()).cuda() if self.config.if_gpu else torch.zeros(bert_hidden.size())
-            else:
-                softmax_wight = self.fusion(self.fusion_parameters)
-                bert_hidden_out = torch.zeros(bert_hidden.size(0),bert_hidden.size(2),bert_hidden.size(3)).cuda() if self.config.if_gpu \
-                    else torch.zeros(bert_hidden.size(0),bert_hidden.size(2),bert_hidden.size(3))
 
             if self.config.fusion_sum:
                 if self.config.use_last_four:
